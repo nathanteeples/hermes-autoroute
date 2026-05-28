@@ -12,6 +12,7 @@ class EndpointConfig:
     name: str
     base_url: str
     api_key_env: str | None = None
+    api_key_file: str | None = None
     enabled: bool = True
     headers: dict[str, str] = field(default_factory=dict)
     timeout_seconds: float = 30.0
@@ -91,4 +92,3 @@ class PromptFeatures:
 
 
 JsonDict = dict[str, Any]
-

@@ -96,6 +96,7 @@ def endpoints_from_config(config: dict[str, Any] | None = None) -> list[Endpoint
                 name=item["name"],
                 base_url=item["base_url"],
                 api_key_env=item.get("api_key_env"),
+                api_key_file=item.get("api_key_file"),
                 enabled=item.get("enabled", True),
                 headers=dict(item.get("headers", {})),
                 timeout_seconds=float(item.get("timeout_seconds", 30.0)),
@@ -118,4 +119,3 @@ def _deep_merge(base: dict[str, Any], overlay: dict[str, Any]) -> dict[str, Any]
         else:
             result[key] = value
     return result
-

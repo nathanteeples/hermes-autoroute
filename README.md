@@ -17,10 +17,15 @@ From a local checkout:
 
 The installer:
 
+- detects an existing Hermes Autoroute install and skips file copying unless
+  `AUTOROUTE_REINSTALL=1` is set
 - copies the Hermes provider plugin into `$HERMES_HOME/plugins/model-providers/autoroute`
 - copies the command plugin into `$HERMES_HOME/plugins/autoroute`
 - vendors the Autoroute Python package inside those plugin directories
 - creates `$HERMES_HOME/autoroute/config.json` if it does not exist
+- interactively configures one or more OpenAI-compatible endpoints
+- can store endpoint API keys in `$HERMES_HOME/autoroute/secrets/*.key`
+  with `0600` permissions
 
 The installer does not write into system Python, so it works on PEP 668
 externally-managed Python installs.
@@ -85,7 +90,7 @@ cd hermes-autoroute
 
 By default, Autoroute reads `$HERMES_HOME/autoroute/config.json`, or the path in `HERMES_AUTOROUTE_CONFIG`.
 
-Minimal config:
+The installer can write this for you. Minimal config:
 
 ```json
 {
@@ -93,18 +98,22 @@ Minimal config:
     {
       "name": "openrouter",
       "base_url": "https://openrouter.ai/api/v1",
-      "api_key_env": "OPENROUTER_API_KEY",
+      "api_key_file": "/home/you/.hermes/autoroute/secrets/openrouter.key",
       "enabled": true
     },
     {
       "name": "local",
       "base_url": "http://localhost:11434/v1",
-      "api_key_env": "OLLAMA_API_KEY",
       "enabled": true
     }
   ]
 }
 ```
+
+For API keys, each endpoint may use either:
+
+- `api_key_env`: read a bearer token from an environment variable
+- `api_key_file`: read a bearer token from a local secret file
 
 Useful commands:
 
