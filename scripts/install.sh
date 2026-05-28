@@ -5,17 +5,16 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 HERMES_HOME="${HERMES_HOME:-$HOME/.hermes}"
 PYTHON="${PYTHON:-python3}"
 
-echo "Installing Hermes Autoroute package from $ROOT"
-"$PYTHON" -m pip install -e "$ROOT"
-
 echo "Installing Hermes plugins into $HERMES_HOME"
 mkdir -p "$HERMES_HOME/plugins/model-providers" "$HERMES_HOME/plugins"
 rm -rf "$HERMES_HOME/plugins/model-providers/autoroute" "$HERMES_HOME/plugins/autoroute"
 cp -R "$ROOT/plugins/model-providers/autoroute" "$HERMES_HOME/plugins/model-providers/autoroute"
 cp -R "$ROOT/plugins/autoroute" "$HERMES_HOME/plugins/autoroute"
+cp -R "$ROOT/src/hermes_autoroute" "$HERMES_HOME/plugins/model-providers/autoroute/hermes_autoroute"
+cp -R "$ROOT/src/hermes_autoroute" "$HERMES_HOME/plugins/autoroute/hermes_autoroute"
 
 echo "Creating default Autoroute config if needed"
-HERMES_HOME="$HERMES_HOME" "$PYTHON" -m hermes_autoroute init-config >/dev/null
+HERMES_HOME="$HERMES_HOME" PYTHONPATH="$ROOT/src" "$PYTHON" -m hermes_autoroute init-config >/dev/null
 
 cat <<EOF
 
@@ -30,4 +29,3 @@ Next steps:
        model.model: auto
 
 EOF
-

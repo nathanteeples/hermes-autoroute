@@ -17,10 +17,13 @@ From a local checkout:
 
 The installer:
 
-- installs the Python package in editable mode
 - copies the Hermes provider plugin into `$HERMES_HOME/plugins/model-providers/autoroute`
 - copies the command plugin into `$HERMES_HOME/plugins/autoroute`
+- vendors the Autoroute Python package inside those plugin directories
 - creates `$HERMES_HOME/autoroute/config.json` if it does not exist
+
+The installer does not write into system Python, so it works on PEP 668
+externally-managed Python installs.
 
 Then configure Hermes:
 
@@ -39,10 +42,12 @@ hermes autoroute serve
 ## Install manually
 
 ```bash
-pip install -e .
 mkdir -p "$HERMES_HOME/plugins/model-providers" "$HERMES_HOME/plugins"
 cp -R plugins/model-providers/autoroute "$HERMES_HOME/plugins/model-providers/"
 cp -R plugins/autoroute "$HERMES_HOME/plugins/"
+cp -R src/hermes_autoroute "$HERMES_HOME/plugins/model-providers/autoroute/hermes_autoroute"
+cp -R src/hermes_autoroute "$HERMES_HOME/plugins/autoroute/hermes_autoroute"
+PYTHONPATH=src python3 -m hermes_autoroute init-config
 hermes plugins enable autoroute
 ```
 
@@ -63,7 +68,7 @@ hermes autoroute serve
 Or outside Hermes:
 
 ```bash
-hermes-autoroute serve
+PYTHONPATH=src python3 -m hermes_autoroute serve
 ```
 
 ## Install from GitHub
