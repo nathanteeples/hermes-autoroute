@@ -1,0 +1,8 @@
+name: autoroute
+version: 0.1.0
+description: Manage Hermes Autoroute model discovery, probing, routing, and diagnostics
+provides_commands:
+  - autoroute
+provides_hooks:
+  - on_session_start
+

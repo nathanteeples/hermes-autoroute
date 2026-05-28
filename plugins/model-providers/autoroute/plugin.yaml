@@ -1,0 +1,6 @@
+name: autoroute
+kind: model-provider
+version: 0.1.0
+description: Hermes Autoroute intelligent model router provider
+author: Hermes Autoroute Contributors
+

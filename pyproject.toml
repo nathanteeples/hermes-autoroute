@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "hermes-autoroute"
+version = "0.1.0"
+description = "Hermes-native model discovery, probing, and intelligent LLM routing."
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [{ name = "Hermes Autoroute Contributors" }]
+license = { text = "MIT" }
+dependencies = []
+
+[project.scripts]
+hermes-autoroute = "hermes_autoroute.cli:main"
+
+[project.entry-points."hermes_agent.plugins"]
+autoroute = "hermes_autoroute.hermes_plugin"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
